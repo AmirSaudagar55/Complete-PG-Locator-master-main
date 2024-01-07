@@ -1,0 +1,175 @@
+utils->api.js::
+paste at last
+
+export const deleteResidency = async (residencyId) => {
+  try {
+    const response = await api.delete(`/residency/delete/${residencyId}`
+    // , {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    );
+
+    if (response.status === 400 || response.status === 500) {
+      throw response.data;
+    }
+
+    return response.data;
+  } catch (error) {
+    toast.error("Something went wrong while deleting residency");
+    throw error;
+  }
+}
+
+
+
+App.jsx::
+import AdminLogin from "./components/Admin/AdminLogin"
+import AdminPage from "./components/Admin/AdminPage"
+<Route path="/adminLogin" element={<AdminLogin/>} />
+<Route path="/admin" element={<AdminPage/>} />
+Above booking
+
+components->Admin
+AdminLogin.jsx::
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Admin from './AdminPage'; // Import the Admin component
+
+const AdminLogin = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    // Simulated authentication logic
+    const isAdminAuthenticated = username === 'admin' && password === 'adminpassword';
+
+    if (isAdminAuthenticated) {
+      // Redirect to the Admin component after successful login
+      navigate('/admin');
+    } else {
+      console.log('Admin login failed. Invalid credentials.');
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center h-screen">
+      <div className="bg-white p-8 shadow-md rounded-md w-96">
+        <h2 className="text-2xl font-bold mb-4">Admin Login</h2>
+        <form onSubmit={handleLogin}>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600">Username:</label>
+            <input
+              type="text"
+              className="mt-1 p-2 border rounded-md w-full"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600">Password:</label>
+            <input
+              type="password"
+              className="mt-1 p-2 border rounded-md w-full"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <button
+            type="submit"
+            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+          >
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default AdminLogin;
+
+
+AdminPage.jsx::
+// AdminPage.js
+
+import React, { useState, useEffect } from 'react';
+import { getAllProperties, deleteResidency } from '../../utils/api';
+
+const AdminPage = () => {
+  const [residencies, setResidencies] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const data = await getAllProperties();
+      setResidencies(data);
+    } catch (error) {
+      console.error('Error fetching residencies:', error);
+    }
+  };
+
+  const handleDeleteResidency = async (id) => {
+    try {
+      await deleteResidency(id);
+      alert('Residency deleted successfully');
+      fetchData();
+    } catch (error) {
+      console.error('Error deleting residency:', error);
+      alert('Error deleting residency');
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return (
+    <div className="container mx-auto my-8">
+      <h1 className="text-3xl font-semibold mb-4 text-white">Admin Page</h1>
+      <table className="min-w-full bg-white border border-gray-300 shadow-md">
+        <thead>
+          <tr>
+            <th className="py-2 px-4 border-b">Title</th>
+            <th className="py-2 px-4 border-b">Description</th>
+            <th className="py-2 px-4 border-b">Price</th>
+            <th className="py-2 px-4 border-b">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {residencies.map((residency) => (
+            <tr key={residency.id}>
+              <td className="py-2 px-4 border-b">{residency.title}</td>
+              <td className="py-2 px-4 border-b">{residency.description}</td>
+              <td className="py-2 px-4 border-b">{residency.price}</td>
+              <td className="py-2 px-4 border-b">
+                <button
+                  onClick={() => handleDeleteResidency(residency.id)}
+                  className="bg-red-500 text-white py-1 px-2 rounded"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default AdminPage;
+
+
+Component->Header
+Header.jsx::
+<Link to="/adminLogin">Admin</Link>
+before navlink
+
+
+
+
+
+
