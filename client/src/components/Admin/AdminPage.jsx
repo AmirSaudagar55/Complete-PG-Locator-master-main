@@ -51,8 +51,7 @@ const AdminPage = () => {
     setModalOpen(true);
   };
 
-  const handleInputChange = (name, event) => {
-    const value = event.target.value;
+  const handleInputChange = (name, value) => {
     setEditedResidency({ ...editedResidency, [name]: value });
   };
 
@@ -98,50 +97,50 @@ const AdminPage = () => {
 
   return (
     <div>
-    <h1 style={{ color: "#61dafb", fontSize: "24px", fontWeight: "bold", marginBottom: "16px", color: "white" }}>
-      Admin Page
-    </h1>
-    <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "20px", border: "1px solid #ccc" }}>
-      <thead>
-        <tr>
-          <th style={{ padding: "12px", backgroundColor: "#4caf50", color: "white", textAlign: "left" }}>
-            Title
-          </th>
-          <th style={{ padding: "12px", backgroundColor: "#4caf50", color: "white", textAlign: "left" }}>
-            Description
-          </th>
-          <th style={{ padding: "12px", backgroundColor: "#4caf50", color: "white", textAlign: "left" }}>
-            Price
-          </th>
-          <th style={{ padding: "12px", backgroundColor: "#4caf50", color: "white", textAlign: "left" }}>
-            Actions
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {residencies.map((residency) => (
-          <tr key={residency.id} style={{ borderBottom: "1px solid #ccc" }}>
-            <td style={{ padding: "12px", backgroundColor: "#f9f9f9", textAlign: "left" }}>{residency.title}</td>
-            <td style={{ padding: "12px", backgroundColor: "#f9f9f9", textAlign: "left" }}>{residency.description}</td>
-            <td style={{ padding: "12px", backgroundColor: "#f9f9f9", textAlign: "left" }}>{residency.price}</td>
-            <td style={{ padding: "12px", backgroundColor: "#f9f9f9", textAlign: "left" }}>
-              <button
-                onClick={() => handleDeleteResidency(residency.id)}
-                style={{ backgroundColor: "#d9534f", color: "white", padding: "8px", borderRadius: "4px", marginRight: "8px", cursor: "pointer" }}
-              >
-                Delete
-              </button>
-              <button
-                onClick={() => handleUpdateClick(residency)}
-                style={{ backgroundColor: "#5bc0de", color: "white", padding: "8px", borderRadius: "4px", cursor: "pointer" }}
-              >
-                Update
-              </button>
-            </td>
+      <h1 style={{ color: "#61dafb", fontSize: "24px", fontWeight: "bold", marginBottom: "16px", color: "white" }}>
+        Admin Page
+      </h1>
+      <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "20px", border: "1px solid #ccc" }}>
+        <thead>
+          <tr>
+            <th style={{ padding: "12px", backgroundColor: "#4caf50", color: "white", textAlign: "left" }}>
+              Title
+            </th>
+            <th style={{ padding: "12px", backgroundColor: "#4caf50", color: "white", textAlign: "left" }}>
+              Description
+            </th>
+            <th style={{ padding: "12px", backgroundColor: "#4caf50", color: "white", textAlign: "left" }}>
+              Price
+            </th>
+            <th style={{ padding: "12px", backgroundColor: "#4caf50", color: "white", textAlign: "left" }}>
+              Actions
+            </th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {residencies.map((residency) => (
+            <tr key={residency.id} style={{ borderBottom: "1px solid #ccc" }}>
+              <td style={{ padding: "12px", backgroundColor: "#f9f9f9", textAlign: "left" }}>{residency.title}</td>
+              <td style={{ padding: "12px", backgroundColor: "#f9f9f9", textAlign: "left" }}>{residency.description}</td>
+              <td style={{ padding: "12px", backgroundColor: "#f9f9f9", textAlign: "left" }}>{residency.price}</td>
+              <td style={{ padding: "12px", backgroundColor: "#f9f9f9", textAlign: "left" }}>
+                <button
+                  onClick={() => handleDeleteResidency(residency.id)}
+                  style={{ backgroundColor: "#d9534f", color: "white", padding: "8px", borderRadius: "4px", marginRight: "8px", cursor: "pointer" }}
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={() => handleUpdateClick(residency)}
+                  style={{ backgroundColor: "#5bc0de", color: "white", padding: "8px", borderRadius: "4px", cursor: "pointer" }}
+                >
+                  Update
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
       {editing && (
         <Modal
@@ -207,7 +206,7 @@ const AdminPage = () => {
               label="Bathroom Count"
               placeholder="Enter bathroom count"
               value={editedResidency.bathroomCount}
-              onChange={(event) => handleInputChange("bathroomCount", event)}
+              onChange={(value) => handleInputChange("bathroomCount", value)}
               required
             />
 
@@ -215,7 +214,7 @@ const AdminPage = () => {
               label="Bedroom Count"
               placeholder="Enter bedroom count"
               value={editedResidency.bedroomCount}
-              onChange={(event) => handleInputChange("bedroomCount", event)}
+              onChange={(value) => handleInputChange("bedroomCount", value)}
               required
             />
 
@@ -223,10 +222,9 @@ const AdminPage = () => {
               label="Parking Count"
               placeholder="Enter parking count"
               value={editedResidency.parkingCount}
-              onChange={(event) => handleInputChange("parkingCount", event)}
+              onChange={(value) => handleInputChange("parkingCount", value)}
               required
             />
-
             <TextInput
               label="Image URL"
               placeholder="Enter image URL"
@@ -249,7 +247,7 @@ const AdminPage = () => {
           </form>
         </Modal>
       )}
-      <BookedVisitsTable/>
+      <BookedVisitsTable />
     </div>
   );
 };
