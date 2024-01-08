@@ -39,11 +39,11 @@ export const getProperty = async (id) => {
   }
 };
 
-export const createUser = async (email, token) => {
+export const createUser = async (email, token, name = "", phone = "") => {
   try {
     await api.post(
       `/user/register`,
-      { email },
+      { email, name, phone },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -55,6 +55,7 @@ export const createUser = async (email, token) => {
     throw error;
   }
 };
+
 
 export const bookVisit = async (date, propertyId, email, token) => {
   try {
@@ -252,6 +253,24 @@ export const getAllUsers = async () => {
     throw error;
   }
 };
+
+export const updateUserDetails = async (email, token, name, phone) => {
+  try {
+    await api.post(
+      `/user/updateDetails`,
+      { email, name, phone },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  } catch (error) {
+    toast.error("Something went wrong while updating user details");
+    throw error;
+  }
+};
+
 
 
 

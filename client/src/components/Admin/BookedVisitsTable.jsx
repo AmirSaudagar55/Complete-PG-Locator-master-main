@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { getAllUsers, getAllProperties } from "../../utils/api"; // Import getAllProperties
-import { Table, Spin, Alert } from "antd"; // Added Spin and Alert for loading and error handling
+import { getAllUsers, getAllProperties } from "../../utils/api";
+import { Table, Spin, Alert } from "antd";
 
 const BookedVisitsTable = () => {
   const [bookedVisitsData, setBookedVisitsData] = useState([]);
@@ -10,20 +10,19 @@ const BookedVisitsTable = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const email = "user@example.com"; // Replace with the user's email or get it dynamically
-        // const token = "your-auth-token"; // Replace with the user's authentication token or get it dynamically
-
         const allUsers = await getAllUsers();
-        const allProperties = await getAllProperties(); // Fetch all properties
+        const allProperties = await getAllProperties();
 
         const usersWithBookedVisits = allUsers
           .filter((user) => user.bookedVisits.length > 0)
           .map((user) => ({
             email: user.email,
+            name: user.name, // Include user's name
+            phone: user.phone, // Include user's phone number
             visits: user.bookedVisits.map((visit) => ({
               date: visit.date,
               residencyId: visit.id,
-              residencyName: getResidencyNameById(visit.id, allProperties), // Get residency name by id
+              residencyName: getResidencyNameById(visit.id, allProperties),
             })),
           }));
 
@@ -41,9 +40,8 @@ const BookedVisitsTable = () => {
 
   const getResidencyNameById = (id, allProperties) => {
     const property = allProperties.find((property) => property.id === id);
-    return property ? property.title : ""; // Assuming the name property exists in your residency object
+    return property ? property.title : "";
   };
-  
 
   const columns = [
     {
@@ -52,7 +50,17 @@ const BookedVisitsTable = () => {
       key: "email",
     },
     {
-      title: "Residency Name", // Updated title
+      title: "User Name", // Added title
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "User Phone", // Added title
+      dataIndex: "phone",
+      key: "phone",
+    },
+    {
+      title: "Residency Name",
       dataIndex: "visits",
       key: "residencyName",
       render: (visits) => (

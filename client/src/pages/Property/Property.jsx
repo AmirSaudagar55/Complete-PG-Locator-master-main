@@ -151,12 +151,13 @@ const Property = () => {
               </button>
             )}
 
-            <BookingModal
-              opened={modalOpened}
-              setOpened={setModalOpened}
-              propertyId={id}
-              email={user?.email}
-            />
+<BookingModal
+          opened={modalOpened}
+          setOpened={setModalOpened}
+          propertyId={id}
+          email={user?.email}
+          token={token}
+        />
           </div>
 
           {/* right side */}

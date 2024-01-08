@@ -100,47 +100,49 @@ const AdminPage = () => {
       <h1 style={{ color: "#61dafb", fontSize: "24px", fontWeight: "bold", marginBottom: "16px", color: "white" }}>
         Admin Page
       </h1>
-      <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "20px", border: "1px solid #ccc" }}>
-        <thead>
-          <tr>
-            <th style={{ padding: "12px", backgroundColor: "#4caf50", color: "white", textAlign: "left" }}>
-              Title
-            </th>
-            <th style={{ padding: "12px", backgroundColor: "#4caf50", color: "white", textAlign: "left" }}>
-              Description
-            </th>
-            <th style={{ padding: "12px", backgroundColor: "#4caf50", color: "white", textAlign: "left" }}>
-              Price
-            </th>
-            <th style={{ padding: "12px", backgroundColor: "#4caf50", color: "white", textAlign: "left" }}>
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {residencies.map((residency) => (
-            <tr key={residency.id} style={{ borderBottom: "1px solid #ccc" }}>
-              <td style={{ padding: "12px", backgroundColor: "#f9f9f9", textAlign: "left" }}>{residency.title}</td>
-              <td style={{ padding: "12px", backgroundColor: "#f9f9f9", textAlign: "left" }}>{residency.description}</td>
-              <td style={{ padding: "12px", backgroundColor: "#f9f9f9", textAlign: "left" }}>{residency.price}</td>
-              <td style={{ padding: "12px", backgroundColor: "#f9f9f9", textAlign: "left" }}>
-                <button
-                  onClick={() => handleDeleteResidency(residency.id)}
-                  style={{ backgroundColor: "#d9534f", color: "white", padding: "8px", borderRadius: "4px", marginRight: "8px", cursor: "pointer" }}
-                >
-                  Delete
-                </button>
-                <button
-                  onClick={() => handleUpdateClick(residency)}
-                  style={{ backgroundColor: "#5bc0de", color: "white", padding: "8px", borderRadius: "4px", cursor: "pointer" }}
-                >
-                  Update
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <table style={{ width: "100%", marginTop: "20px", border: "1px solid #ccc" }}>
+  <thead>
+    <tr style={{ backgroundColor: "#4caf50", color: "white" }}>
+      <th style={{ padding: "12px", textAlign: "left" }}>Title</th>
+      <th style={{ padding: "12px", textAlign: "left" }}>Description</th>
+      <th style={{ padding: "12px", textAlign: "left" }}>Price</th>
+      <th style={{ padding: "12px", textAlign: "left" }}>Booking Count</th>
+      <th style={{ padding: "12px", textAlign: "left" }}>Bathrooms Count</th>
+      <th style={{ padding: "12px", textAlign: "left" }}>Bedrooms Count</th>
+      <th style={{ padding: "12px", textAlign: "left" }}>Parking Count</th>
+      <th style={{ padding: "12px", textAlign: "left" }}>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {residencies.map((residency) => (
+      <tr key={residency.id} style={{ borderBottom: "1px solid #ccc" }}>
+        <td style={{ padding: "12px", textAlign: "left", backgroundColor: "#f9f9f9" }}>{residency.title}</td>
+        <td style={{ padding: "12px", textAlign: "left", backgroundColor: "#f9f9f9" }}>{residency.description}</td>
+        <td style={{ padding: "12px", textAlign: "left", backgroundColor: "#f9f9f9" }}>{residency.price}</td>
+        <td style={{ padding: "12px", textAlign: "left", backgroundColor: "#f9f9f9" }}>{residency.bookedBedrooms}</td>
+        <td style={{ padding: "12px", textAlign: "left", backgroundColor: "#f9f9f9" }}>{residency.facilities.bathrooms}</td>
+        <td style={{ padding: "12px", textAlign: "left", backgroundColor: "#f9f9f9" }}>{residency.facilities.bedrooms}</td>
+        <td style={{ padding: "12px", textAlign: "left", backgroundColor: "#f9f9f9" }}>{residency.facilities.parkings}</td>
+        <td style={{ padding: "12px", textAlign: "left", backgroundColor: "#f9f9f9" }}>
+          <button
+            onClick={() => handleDeleteResidency(residency.id)}
+            style={{ backgroundColor: "#d9534f", color: "white", padding: "8px", borderRadius: "4px", marginRight: "8px",marginBottom: "5px", cursor: "pointer", width : "80px" }}
+          >
+            Delete
+          </button>
+          <button
+            onClick={() => handleUpdateClick(residency)}
+            style={{ backgroundColor: "#5bc0de", color: "white", padding: "8px", borderRadius: "4px", cursor: "pointer", width : "80px" }}
+          >
+            Update
+          </button>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+
 
       {editing && (
         <Modal
